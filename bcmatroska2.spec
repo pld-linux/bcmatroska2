@@ -9,6 +9,7 @@ Version:	0.23
 Release:	1
 License:	BSD
 Group:		Libraries
+# for future releases see https://gitlab.linphone.org/BC/public/bcmatroska2/-/tags
 Source0:	https://linphone.org/releases/sources/bcmatroska2/%{name}-%{version}.tar.gz
 # Source0-md5:	bc9d6dbdfb9790c10051294cc4293476
 URL:		https://linphone.org/
