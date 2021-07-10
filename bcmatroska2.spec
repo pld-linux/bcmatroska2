@@ -6,7 +6,7 @@ Summary:	Matroska2 library for Belledonne Communications projects
 Summary(pl.UTF-8):	Biblioteka Matroska2 do projektów Belledonne Communications
 Name:		bcmatroska2
 Version:	0.23
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries
 # for future releases see https://gitlab.linphone.org/BC/public/bcmatroska2/-/tags
@@ -63,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# disable completeness check incompatible with split packaging
+%{__sed} -i -e '/^foreach(target .*IMPORT_CHECK_TARGETS/,/^endforeach/d; /^unset(_IMPORT_CHECK_TARGETS)/d' $RPM_BUILD_ROOT%{_datadir}/bcmatroska2/cmake/BcMatroska2Targets.cmake
 
 %clean
 rm -rf $RPM_BUILD_ROOT
