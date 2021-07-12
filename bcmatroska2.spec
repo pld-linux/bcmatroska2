@@ -14,6 +14,7 @@ Source0:	https://linphone.org/releases/sources/bcmatroska2/%{name}-%{version}.ta
 # Source0-md5:	bc9d6dbdfb9790c10051294cc4293476
 URL:		https://linphone.org/
 BuildRequires:	cmake >= 3.0
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
