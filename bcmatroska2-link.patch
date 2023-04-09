@@ -1,0 +1,20 @@
+--- bcmatroska2-5.2.1/corec/corec/CMakeLists.txt.orig	2022-11-29 11:25:07.000000000 +0100
++++ bcmatroska2-5.2.1/corec/corec/CMakeLists.txt	2023-04-09 20:33:31.565041475 +0200
+@@ -52,7 +52,6 @@ if(WIN32)
+ else()
+ 	list(APPEND COREC_SOURCES
+ 		helpers/date/date_libc.c
+-		helpers/file/file_libc.c
+ 		helpers/file/file_bctbx.c
+ 		multithread/multithread_pthread.c
+ 	)
+--- bcmatroska2-5.2.1/libmatroska2/CMakeLists.txt.orig	2023-04-09 20:33:59.088225702 +0200
++++ bcmatroska2-5.2.1/libmatroska2/CMakeLists.txt	2023-04-09 20:39:07.949885788 +0200
+@@ -56,6 +56,7 @@ if(ENABLE_SHARED)
+ 		set_target_properties(bcmatroska2 PROPERTIES LINK_FLAGS "${LINK_FLAGS_STR}")
+ 	endif()
+ 	target_include_directories(bcmatroska2 PRIVATE ../libebml2 .)
++	target_link_libraries(bcmatroska2 bctoolbox)
+ 	if(LIBS)
+ 		target_link_libraries(bcmatroska2 ${LIBS})
+ 	endif()
