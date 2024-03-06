@@ -1,22 +1,22 @@
 #
 # Conditional build:
-%bcond_without	static_libs	# don't build static libraries
+%bcond_without	static_libs	# static library
 #
 Summary:	Matroska2 library for Belledonne Communications projects
 Summary(pl.UTF-8):	Biblioteka Matroska2 do projektów Belledonne Communications
 Name:		bcmatroska2
-Version:	5.2.1
+Version:	5.3.26
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://gitlab.linphone.org/BC/public/bcmatroska2/-/tags
 Source0:	https://gitlab.linphone.org/BC/public/bcmatroska2/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	dc8602f20ca33c6e3e6b08fd6b527abc
-Patch0:		%{name}-static.patch
-Patch1:		%{name}-link.patch
+# Source0-md5:	3a01147f051a1a05a97382cf84eabae3
 URL:		https://linphone.org/
+BuildRequires:	bctoolbox-devel >= 5.3.0
 BuildRequires:	cmake >= 3.1
 BuildRequires:	rpmbuild(macros) >= 1.605
+Requires:	bctoolbox >= 5.3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -30,6 +30,7 @@ Summary:	Header files for bcmatroska2 library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki bcmatroska2
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	bctoolbox-devel >= 5.3.0
 Obsoletes:	matroska-foundation-devel < 0.1
 
 %description devel
@@ -52,25 +53,34 @@ Statyczna biblioteka bcmatroska2.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
-install -d build
-cd build
+%if %{with static_libs}
+install -d builddir-static
+cd builddir-static
 %cmake .. \
-	%{!?with_static_libs:-DENABLE_STATIC=OFF}
+	-DBUILD_SHARED_LIBS=OFF
+
+%{__make}
+cd ..
+%endif
+
+install -d builddir
+cd builddir
+%cmake ..
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} -C build install \
+%if %{with static_libs}
+%{__make} -C builddir-static install \
 	DESTDIR=$RPM_BUILD_ROOT
+%endif
 
-# disable completeness check incompatible with split packaging
-%{__sed} -i -e '/^foreach(target .*IMPORT_CHECK_TARGETS/,/^endforeach/d; /^unset(_IMPORT_CHECK_TARGETS)/d' $RPM_BUILD_ROOT%{_datadir}/bcmatroska2/cmake/BcMatroska2Targets.cmake
+%{__make} -C builddir install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -89,8 +99,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/corec
 %{_includedir}/ebml
 %{_includedir}/matroska
-%dir %{_datadir}/bcmatroska2
-%{_datadir}/bcmatroska2/cmake
+%dir %{_datadir}/BCMatroska2
+%{_datadir}/BCMatroska2/cmake
 
 %if %{with static_libs}
 %files static
