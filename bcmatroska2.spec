@@ -5,13 +5,13 @@
 Summary:	Matroska2 library for Belledonne Communications projects
 Summary(pl.UTF-8):	Biblioteka Matroska2 do projektów Belledonne Communications
 Name:		bcmatroska2
-Version:	5.3.26
+Version:	5.3.36
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://gitlab.linphone.org/BC/public/bcmatroska2/-/tags
 Source0:	https://gitlab.linphone.org/BC/public/bcmatroska2/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	3a01147f051a1a05a97382cf84eabae3
+# Source0-md5:	424fd91cceb53194563cacc377d4bc7d
 URL:		https://linphone.org/
 BuildRequires:	bctoolbox-devel >= 5.3.0
 BuildRequires:	cmake >= 3.1
