@@ -5,16 +5,16 @@
 Summary:	Matroska2 library for Belledonne Communications projects
 Summary(pl.UTF-8):	Biblioteka Matroska2 do projektów Belledonne Communications
 Name:		bcmatroska2
-Version:	5.3.101
+Version:	5.4.17
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://gitlab.linphone.org/BC/public/bcmatroska2/-/tags
 Source0:	https://gitlab.linphone.org/BC/public/bcmatroska2/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	606186da70eb806149d3b329a2635258
+# Source0-md5:	2e41f4a800d1ecbdce419a4323e46230
 URL:		https://linphone.org/
 BuildRequires:	bctoolbox-devel >= 5.3.0
-BuildRequires:	cmake >= 3.1
+BuildRequires:	cmake >= 3.22
 BuildRequires:	rpmbuild(macros) >= 1.605
 Requires:	bctoolbox >= 5.3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -56,20 +56,15 @@ Statyczna biblioteka bcmatroska2.
 
 %build
 %if %{with static_libs}
-install -d builddir-static
-cd builddir-static
-%cmake .. \
+%cmake -B builddir-static \
 	-DBUILD_SHARED_LIBS=OFF
 
-%{__make}
-cd ..
+%{__make} -C builddir-static
 %endif
 
-install -d builddir
-cd builddir
-%cmake ..
+%cmake -B builddir
 
-%{__make}
+%{__make} -C builddir
 
 %install
 rm -rf $RPM_BUILD_ROOT
